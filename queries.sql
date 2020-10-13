@@ -9,36 +9,42 @@ FROM employe AS em
 GROUP BY em.employe_id
 ORDER BY avarage_empoyees_salary DESC;
 
-SELECT po.position,
-       MAX(s.salary_sum) as max_salary,
-       MIN(s.salary_sum) AS min_salary
-FROM position as po
-    INNER JOIN employe AS em ON po.position_id = em.position_id
-    INNER JOIN salary AS s on s.employe_id = po.position_id
+SELECT p.position,
+       MAX(e.current_salary) as highest_salary,
+       AVG(e.current_salary) AS average_salary
+FROM employe as e
+    INNER JOIN position AS p ON p.position_id = e.position_id
 GROUP BY position;
 
 SELECT e.employe_id,
-       CONCAT(e.first_name, ' ',e.last_name)fullname,
-       COUNT(inc.employe_id)amount_of_days,
-       SUM(inc.profit_per_day) AS sum_income
-FROM income AS inc
-    INNER JOIN employe AS e on inc.employe_id = e.employe_id
-GROUP BY inc.employe_id;
+       CONCAT(e.first_name, ' ',e.last_name) AS fullname,
+       COUNT(i.employe_id) AS amount_of_days,
+       SUM(i.profit_per_day) AS sum_income
+FROM income AS i
+    INNER JOIN employe AS e on i.employe_id = e.employe_id
+GROUP BY i.employe_id;
 
 SELECT t.transport_id as transport,
-       SUM(inc.profit_per_day) AS sum_income,
-       AVG(inc.profit_per_day)avg_income,
-       COUNT(inc.transport_id)amount_of_days
-FROM income AS inc
-    JOIN transport AS t on inc.transport_id = t.transport_id
-GROUP BY inc.transport_id
-ORDER BY amount_of_days DESC;
+       SUM(i.profit_per_day) AS sum_income,
+       AVG(i.profit_per_day) AS avg_income,
+       COUNT(i.transport_id) AS number_of_days
+FROM income AS i
+    INNER JOIN transport AS t on i.transport_id = t.transport_id
+GROUP BY i.transport_id
+ORDER BY number_of_days DESC;
 
-SELECT CONCAT(e.first_name, ' ',e.last_name)fullname
+SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname
 FROM employe as e
 WHERE MONTH(dob) = 5;
 
-SELECT CONCAT(e.first_name, ' ',e.last_name)fullname,
-       e.come_date,
-       (datediff(CURRENT_DATE, e.come_date)/366) AS time_in_company
+SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname,
+       e.empoyeed_since,
+       (datediff(CURRENT_DATE, e.empoyeed_since)/366) AS time_in_company
+FROM employe as e;
+
+
+SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname,
+       e.empoyeed_since,
+       TIMESTAMPDIFF(YEAR, e.empoyeed_since, CURDATE()) AS number_of_years
 FROM employe as e
+ORDER BY number_of_years DESC;
