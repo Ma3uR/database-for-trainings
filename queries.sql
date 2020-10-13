@@ -1,79 +1,43 @@
 SELECT em.first_name, em.last_name FROM employe AS em ORDER BY em.last_name;
-
 SELECT em.employe_id,
        em.first_name,
        em.last_name,
        AVG(sa.salary_sum) AS avarage_empoyees_salary
 FROM employe AS em
-    INNER JOIN salary AS sa ON em.employe_id = sa.employe_id
+         INNER JOIN salary AS sa ON em.employe_id = sa.employe_id
 GROUP BY em.employe_id
 ORDER BY avarage_empoyees_salary DESC;
-
 SELECT p.position,
-<<<<<<< HEAD
        MAX(e.current_salary) AS highest_salary,
        AVG(e.current_salary) AS average_salary
 FROM position AS p
-    INNER JOIN employe AS e ON e.position_id = p.position_id
+         INNER JOIN employe AS e ON e.position_id = p.position_id
 GROUP BY p.position_id
 ORDER BY highest_salary DESC;
-=======
-       MAX(e.current_salary) as highest_salary,
-       AVG(e.current_salary) AS average_salary
-FROM employe as e
-    INNER JOIN position AS p ON p.position_id = e.position_id
-GROUP BY position;
->>>>>>> a4b6b190082d752b4db388e8025a3ab8f903ae7b
-
 SELECT e.employe_id,
        CONCAT(e.first_name, ' ',e.last_name) AS fullname,
        COUNT(i.employe_id) AS amount_of_days,
        SUM(i.profit_per_day) AS sum_income
-<<<<<<< HEAD
 FROM employe AS e
-    INNER JOIN income AS i on i.employe_id = e.employe_id
+         INNER JOIN income AS i on i.employe_id = e.employe_id
 GROUP BY i.employe_id;
-
 SELECT t.transport_id AS transport,
-=======
-FROM income AS i
-    INNER JOIN employe AS e on i.employe_id = e.employe_id
-GROUP BY i.employe_id;
-
-SELECT t.transport_id as transport,
->>>>>>> a4b6b190082d752b4db388e8025a3ab8f903ae7b
        SUM(i.profit_per_day) AS sum_income,
        AVG(i.profit_per_day) AS avg_income,
        COUNT(i.transport_id) AS number_of_days
 FROM income AS i
-    INNER JOIN transport AS t on i.transport_id = t.transport_id
+         INNER JOIN transport AS t on i.transport_id = t.transport_id
 GROUP BY i.transport_id
 ORDER BY number_of_days DESC;
-
 SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname
-<<<<<<< HEAD
 FROM employe AS e
-=======
-FROM employe as e
->>>>>>> a4b6b190082d752b4db388e8025a3ab8f903ae7b
 WHERE MONTH(dob) = 5;
-
 SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname,
        e.empoyeed_since,
        (datediff(CURRENT_DATE, e.empoyeed_since)/366) AS time_in_company
-<<<<<<< HEAD
 FROM employe AS e;
-=======
-FROM employe as e;
->>>>>>> a4b6b190082d752b4db388e8025a3ab8f903ae7b
-
-
 SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname,
        e.empoyeed_since,
        TIMESTAMPDIFF(YEAR, e.empoyeed_since, CURDATE()) AS number_of_years
-<<<<<<< HEAD
 FROM employe AS e
-=======
-FROM employe as e
->>>>>>> a4b6b190082d752b4db388e8025a3ab8f903ae7b
 ORDER BY number_of_years DESC;
