@@ -48,3 +48,20 @@ SELECT CONCAT(e.first_name, ' ',e.last_name) AS fullname,
        TIMESTAMPDIFF(YEAR, e.empoyeed_since, CURDATE()) AS number_of_years
 FROM employe as e
 ORDER BY number_of_years DESC;
+
+ALTER TABLE employe ADD UNIQUE INDEX `EMPLOYEE_DOB`  (dob);
+
+ALTER TABLE employe DROP INDEX `EMPLOYEE_DOB`;
+
+ALTER TABLE salary ADD INDEX `SALARY_SUM`  (salary_sum);
+
+ALTER TABLE employe DROP INDEX `SALARY_SUM`;
+
+
+SELECT * FROM employe WHERE dob <= CURRENT_DATE AND dob >= '1990-01-01';
+
+SELECT * FROM salary WHERE salary_sum > 500;
+
+
+DELETE FROM salary;
+SHOW CREATE TABLE employe;
